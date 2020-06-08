@@ -1,0 +1,10 @@
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\bin\Debug\ScanReduceReturn.exe.config
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\bin\Debug\ScanReduceReturn.exe
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\bin\Debug\ScanReduceReturn.pdb
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\obj\Debug\ScanReduceReturn.Form1.resources
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\obj\Debug\ScanReduceReturn.Properties.Resources.resources
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\obj\Debug\ScanReduceReturn.csproj.GenerateResource.cache
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\obj\Debug\ScanReduceReturn.csproj.CoreCompileInputs.cache
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\obj\Debug\ScanReduceReturn.exe
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\obj\Debug\ScanReduceReturn.pdb
+C:\Dev\ScannerProject\ScanReduceReturn\ScanReduceReturn\obj\Debug\ScanReduceReturn.csprojAssemblyReference.cache
