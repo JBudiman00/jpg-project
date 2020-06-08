@@ -73,15 +73,15 @@ namespace ScanReduceReturn
                 croppedRect = new Rectangle(Math.Min(e.X, initialX), Math.Min(e.X, initialY), Math.Abs(e.X - initialX), Math.Abs(e.Y - initialY));
                 pbView.CreateGraphics().DrawRectangle(drwaPen, croppedRect);
 
-                finalX = width * Math.Sign(width);
-                finalY = height * Math.Sign(height);
+                finalX = Math.Abs(e.X - initialX);
+                finalY = Math.Abs(e.Y - initialY);
             }
         }
 
         private void pbView_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            if (hasImage == true)
+            if (hasImage == true)   //Add safeguarding against cropping image from actual image size
             {
                 croppedImage = cropImage(OrgImage, croppedRect);
             }
