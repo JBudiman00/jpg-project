@@ -42,17 +42,17 @@
             // 
             this.pbView.Location = new System.Drawing.Point(12, 12);
             this.pbView.Name = "pbView";
-            this.pbView.Size = new System.Drawing.Size(555, 558);
+            this.pbView.Size = new System.Drawing.Size(819, 800);
+            this.pbView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbView.TabIndex = 0;
             this.pbView.TabStop = false;
-            this.pbView.Click += new System.EventHandler(this.pbView_Click);
             this.pbView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbView_MouseDown);
             this.pbView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbView_MouseMove);
             this.pbView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbView_MouseUp);
             // 
             // btnInsertFile
             // 
-            this.btnInsertFile.Location = new System.Drawing.Point(633, 12);
+            this.btnInsertFile.Location = new System.Drawing.Point(918, 12);
             this.btnInsertFile.Name = "btnInsertFile";
             this.btnInsertFile.Size = new System.Drawing.Size(75, 23);
             this.btnInsertFile.TabIndex = 1;
@@ -62,7 +62,7 @@
             // 
             // btnCrop
             // 
-            this.btnCrop.Location = new System.Drawing.Point(771, 12);
+            this.btnCrop.Location = new System.Drawing.Point(1055, 12);
             this.btnCrop.Name = "btnCrop";
             this.btnCrop.Size = new System.Drawing.Size(75, 23);
             this.btnCrop.TabIndex = 0;
@@ -72,23 +72,24 @@
             // lblTest
             // 
             this.lblTest.AutoSize = true;
-            this.lblTest.Location = new System.Drawing.Point(913, 224);
+            this.lblTest.Location = new System.Drawing.Point(1068, 58);
             this.lblTest.Name = "lblTest";
             this.lblTest.Size = new System.Drawing.Size(0, 13);
             this.lblTest.TabIndex = 2;
             // 
             // pbCropped
             // 
-            this.pbCropped.Location = new System.Drawing.Point(633, 126);
+            this.pbCropped.Location = new System.Drawing.Point(867, 106);
             this.pbCropped.Name = "pbCropped";
             this.pbCropped.Size = new System.Drawing.Size(386, 419);
+            this.pbCropped.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCropped.TabIndex = 3;
             this.pbCropped.TabStop = false;
             this.pbCropped.Click += new System.EventHandler(this.pbCropped_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(898, 12);
+            this.btnSave.Location = new System.Drawing.Point(1190, 12);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
@@ -100,13 +101,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1061, 582);
+            this.ClientSize = new System.Drawing.Size(1367, 845);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.pbCropped);
-            this.Controls.Add(this.lblTest);
             this.Controls.Add(this.btnCrop);
             this.Controls.Add(this.btnInsertFile);
             this.Controls.Add(this.pbView);
+            this.Controls.Add(this.pbCropped);
+            this.Controls.Add(this.lblTest);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pbView)).EndInit();

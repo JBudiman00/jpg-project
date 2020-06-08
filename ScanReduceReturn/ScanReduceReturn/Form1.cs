@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,17 +23,10 @@ namespace ScanReduceReturn
         public static string file;
         Image OrgImage;
         Image croppedImage;
-        private Bitmap croppedBitMap;
-        Graphics g;
 
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void pbView_Click(object sender, EventArgs e)
-        {
-            lblTest.Text = finalX.ToString();
         }
         private void btnInsertFile_Click(object sender, EventArgs e)
         {
@@ -49,9 +43,43 @@ namespace ScanReduceReturn
                 hasImage = true;
             }
         }
-        private void btnCrop_Click(object sender, EventArgs e)
+        private void btnCrop_Click(object sender, EventArgs e)  //Assumption: All images are square/rectangular
         {
-            pbCropped.Image = croppedImage;
+            //pbCropped.Image = croppedImage;
+            
+            int count = 0, xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
+            Bitmap CroppedBitMap = new Bitmap(croppedImage);
+            Color white = new Color();
+            white = Color.FromArgb(255, 255, 255);
+            for (int x = 0; x < CroppedBitMap.Width; x++)   //Change, account for zoom factor
+            {
+                for (int y = 0; y < CroppedBitMap.Height; y++)
+                {
+                    if (CroppedBitMap.GetPixel(x, y) != white && count == 0)
+                    {
+                        xS = x;
+                        yS = y;
+                        count++;
+                    }
+
+                    if (CroppedBitMap.GetPixel(x, y) == white && count == 1)
+                    {
+                        xE = x;
+                        yE = y;
+                    }
+                }
+            }
+
+            //Create a new Cropped image containing only the actual image, no white space
+            if (yE != 0)
+            {
+                lblTest.Text = "Testing";
+                Rectangle temp = new Rectangle(xS, yS, xE, yE);
+                Image completeImage = cropImage(croppedImage, temp);
+                pbCropped.Image = completeImage;
+            }
+            else
+                lblTest.Text = "Error, Retry cropping";
         }
 
         private void pbView_MouseDown(object sender, MouseEventArgs e)
@@ -83,6 +111,8 @@ namespace ScanReduceReturn
             isDown = false;
             if (hasImage == true)   //Add safeguarding against cropping image from actual image size
             {
+                lblTest.Text = finalX.ToString();
+                //Rectangle rectTest = new Rectangle(5, 5, 200, 200);
                 croppedImage = cropImage(OrgImage, croppedRect);
             }
         }
@@ -91,7 +121,6 @@ namespace ScanReduceReturn
         {
             Bitmap bmpImage = new Bitmap(img);
             Bitmap bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat);
-            Bitmap croppedBitMap = bmpCrop;
             return (Image)(bmpCrop);
         }
 
