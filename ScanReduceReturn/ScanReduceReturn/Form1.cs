@@ -24,6 +24,12 @@ namespace ScanReduceReturn
         Image OrgImage;
         Image croppedImage;
 
+        private float TopBarGrayHeight { get; set; }
+        private float LeftBarGrayHeight { get; set; }
+        private bool UseXScale { get; set; }
+        private float PbX { get; set; }
+        private float PbY { get; set; }
+
         public Form1()
         {
             InitializeComponent();
@@ -45,48 +51,55 @@ namespace ScanReduceReturn
         }
         private void btnCrop_Click(object sender, EventArgs e)  //Assumption: All images are square/rectangular
         {
-            //pbCropped.Image = croppedImage;
-            
-            int count = 0, xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
-            Bitmap CroppedBitMap = new Bitmap(croppedImage);
-            Color white = new Color();
-            white = Color.FromArgb(255, 255, 255);
-            for (int x = 0; x < CroppedBitMap.Width; x++)   //Change, account for zoom factor
+            if (hasImage == true && finalX < pbView.Width && finalY < pbView.Height)   //Add safeguarding against cropping image from actual image size
             {
-                for (int y = 0; y < CroppedBitMap.Height; y++)
+                croppedImage = getImageRect();
+
+                /*int count = 0, xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
+                Bitmap CroppedBitMap = new Bitmap(croppedImage);
+                Color white = new Color();
+                white = Color.FromArgb(255, 255, 255);
+                for (int x = 0; x < CroppedBitMap.Width; x++)   //Change, account for zoom factor
                 {
-                    if (CroppedBitMap.GetPixel(x, y) != white && count == 0)
+                    for (int y = 0; y < CroppedBitMap.Height; y++)
                     {
-                        xS = x;
-                        yS = y;
-                        count++;
-                    }
+                        if (CroppedBitMap.GetPixel(x, y) != white && count == 0)
+                        {
+                            xS = x;
+                            yS = y;
+                            count++;
+                        }
 
-                    if (CroppedBitMap.GetPixel(x, y) == white && count == 1)
-                    {
-                        xE = x;
-                        yE = y;
+                        if (CroppedBitMap.GetPixel(x, y) == white && count == 1)
+                        {
+                            xE = x;
+                            yE = y;
+                        }
                     }
+                }*/
+
+                //Create a new Cropped image containing only the actual image, no white space
+                //if (yE != 0)
+                {
+                    //lblTest.Text = "Here's the cropped image";
+                    //Rectangle temp = new Rectangle(xS, yS, xE, yE);
+                    //Image completeImage = cropImage(croppedImage, temp);
+                    //float scaleFactorX = pbView.ClientSize.Width / pbView.Image.Size.Width;
+                    //float scaleFactorY = pbView.ClientSize.Height / pbView.Image.Size.Height;
+                    pbCropped.Image = croppedImage;
+
                 }
+                //else
+                //lblTest.Text = "Error, Retry cropping";
             }
-
-            //Create a new Cropped image containing only the actual image, no white space
-            if (yE != 0)
-            {
-                lblTest.Text = "Testing";
-                Rectangle temp = new Rectangle(xS, yS, xE, yE);
-                Image completeImage = cropImage(croppedImage, temp);
-                pbCropped.Image = completeImage;
-            }
-            else
-                lblTest.Text = "Error, Retry cropping";
         }
 
         private void pbView_MouseDown(object sender, MouseEventArgs e)
         {
-                isDown = true;
-                initialX = e.X;
-                initialY = e.Y;
+            lblTest.Text = "";
+            isDown = true;
+            initialX = e.X;
+            initialY = e.Y;
         }
 
         private void pbView_MouseMove(object sender, MouseEventArgs e)
@@ -94,27 +107,21 @@ namespace ScanReduceReturn
             if (isDown == true)
             {
                 this.Refresh();
-                Pen drwaPen = new Pen(Color.Navy, 1);
+                Pen drawPen = new Pen(Color.Navy, 1);
                 int width = e.X - initialX, height = e.Y - initialY;
-                //Rectangle rect = new Rectangle(initialPt.X, initialPt.Y, Cursor.Position.X - initialPt.X, Cursor.Position.Y - initialPt.Y);
-                //croppedRect = new Rectangle(Math.Min(e.X, initialX), Math.Min(e.X, initialY), Math.Abs(width * Math.Sign(width)), Math.Abs(height * Math.Sign(height)));
-                croppedRect = new Rectangle(Math.Min(e.X, initialX), Math.Min(e.X, initialY), Math.Abs(e.X - initialX), Math.Abs(e.Y - initialY));
-                pbView.CreateGraphics().DrawRectangle(drwaPen, croppedRect);
 
-                finalX = Math.Abs(e.X - initialX);
-                finalY = Math.Abs(e.Y - initialY);
+                //Rectangle rect = new Rectangle(initialPt.X, initialPt.Y, Cursor.Position.X - initialPt.X, Cursor.Position.Y - initialPt.Y);
+                Rectangle rect = new Rectangle(Math.Min(e.X, initialX), Math.Min(e.X, initialY), Math.Abs(width), Math.Abs(height));
+                pbView.CreateGraphics().DrawRectangle(drawPen, rect);
+
             }
         }
 
         private void pbView_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            if (hasImage == true)   //Add safeguarding against cropping image from actual image size
-            {
-                lblTest.Text = finalX.ToString();
-                //Rectangle rectTest = new Rectangle(5, 5, 200, 200);
-                croppedImage = cropImage(OrgImage, croppedRect);
-            }
+            finalX = e.X;
+            finalY = e.Y;
         }
 
         private static Image cropImage(Image img, Rectangle cropArea)
@@ -124,11 +131,73 @@ namespace ScanReduceReturn
             return (Image)(bmpCrop);
         }
 
-        private void pbCropped_Click(object sender, EventArgs e)
+        private Image getImageRect()
         {
+            findBars();
+
+            int pbWidth = pbView.Width;
+            int pbHeight = pbView.Height;
+
+            int imageHeight = OrgImage.Height;
+            int imageWidth = OrgImage.Width;
+
+            float xScale = imageWidth / (float)pbWidth;
+            float yScale = imageHeight / (float)pbHeight;
+
+            var scale = 0F;
+            if (UseXScale == true)
+                scale = xScale;
+            else
+                scale = yScale;
+
+            PbX = (initialX - LeftBarGrayHeight) * scale;
+            PbY = (initialY - TopBarGrayHeight) * scale;
+
+            float PbFX = (finalX - LeftBarGrayHeight) * scale;
+            float PbFY = (finalY - TopBarGrayHeight) * scale;
+
+            lblTest.Text = string.Format("{0} {1} {2} {3}", PbX, PbY, PbFX, PbFY);
+
+            croppedRect = new Rectangle((int)PbX, (int)PbY, (int)PbFX - (int)PbX, (int)PbFY - (int)PbY);
+
+            return cropImage(OrgImage, croppedRect);
 
         }
 
+        private void findBars()
+        {
+            int pbWidth = pbView.Width;
+            int pbHeight = pbView.Height;
+
+            int imageHeight = OrgImage.Height;
+            int imageWidth = OrgImage.Width;
+
+            var imageAR = imageWidth / (float)imageHeight;
+            var pbAR = pbWidth / (float)pbHeight;
+
+            if (imageAR > pbAR)
+            {
+                LeftBarGrayHeight = 0;
+                // Bars on T & B
+                var xScale = pbWidth / (float)imageWidth;
+                var imageHeightInPictureBox = xScale * imageHeight;
+                var totalHeightOfGrayBars = pbHeight - imageHeightInPictureBox;
+                TopBarGrayHeight = totalHeightOfGrayBars / 2;
+
+                UseXScale = true;
+            }
+            else
+            {
+                TopBarGrayHeight = 0;
+                // Bars on L & R
+                var yScale = pbHeight / (float)imageHeight;
+                var imageWidthInPictureBox = yScale * imageWidth;
+                var totalWidthOfGrayBars = pbWidth - imageWidthInPictureBox;
+                LeftBarGrayHeight = totalWidthOfGrayBars / 2;
+
+                UseXScale = false;
+            }
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
 

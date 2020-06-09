@@ -40,6 +40,10 @@
             // 
             // pbView
             // 
+            this.pbView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbView.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.pbView.Location = new System.Drawing.Point(12, 12);
             this.pbView.Name = "pbView";
             this.pbView.Size = new System.Drawing.Size(819, 800);
@@ -52,6 +56,9 @@
             // 
             // btnInsertFile
             // 
+            this.btnInsertFile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInsertFile.Location = new System.Drawing.Point(918, 12);
             this.btnInsertFile.Name = "btnInsertFile";
             this.btnInsertFile.Size = new System.Drawing.Size(75, 23);
@@ -62,6 +69,9 @@
             // 
             // btnCrop
             // 
+            this.btnCrop.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCrop.Location = new System.Drawing.Point(1055, 12);
             this.btnCrop.Name = "btnCrop";
             this.btnCrop.Size = new System.Drawing.Size(75, 23);
@@ -79,16 +89,21 @@
             // 
             // pbCropped
             // 
+            this.pbCropped.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pbCropped.Location = new System.Drawing.Point(867, 106);
             this.pbCropped.Name = "pbCropped";
             this.pbCropped.Size = new System.Drawing.Size(386, 419);
             this.pbCropped.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCropped.TabIndex = 3;
             this.pbCropped.TabStop = false;
-            this.pbCropped.Click += new System.EventHandler(this.pbCropped_Click);
             // 
             // btnSave
             // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Location = new System.Drawing.Point(1190, 12);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
@@ -109,7 +124,7 @@
             this.Controls.Add(this.pbCropped);
             this.Controls.Add(this.lblTest);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "ScReRe";
             ((System.ComponentModel.ISupportInitialize)(this.pbView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropped)).EndInit();
             this.ResumeLayout(false);
