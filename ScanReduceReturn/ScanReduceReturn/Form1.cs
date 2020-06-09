@@ -60,53 +60,43 @@ namespace ScanReduceReturn
                 int startX = 0;
                 int endX = 0;
 
-                bool a = false;
-                bool b = true;
-
                 Color tempColor;
 
                 int xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
                 Bitmap CroppedBitMap = new Bitmap(croppedImage);
                 Color white = new Color();
                 white = Color.FromArgb(255, 255, 255);
-                for (int x = 0; x < CroppedBitMap.Width; x++)  
+                for (int x = 0; x < CroppedBitMap.Width; x+=2)  
+                {
+                    tempColor = CroppedBitMap.GetPixel(x, CroppedBitMap.Height/2);
+                    if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
+                    {
+                        xS = x;
+                        break;
+                    }
+                }
+
+                for (int x = CroppedBitMap.Width - 1; x > 0 ; x--)
                 {
                     for (int y = 0; y < CroppedBitMap.Height; y++)
                     {
                         tempColor = CroppedBitMap.GetPixel(x, y);
-                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245 && a == false)
-                        {
-                            startX++;
-                        }
-
-                        if (tempColor.R > 240 && tempColor.G > 240 && tempColor.B > 240 && b == false)
+                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
                         {
                             endX++;
                         }
                     }
 
-                    if (startX > CroppedBitMap.Height - 300)
-                    {
-                        xS = x;
-                        a = true;
-                        b = false;
-                    }
                     if (endX > CroppedBitMap.Height - 300)
                     {
                         xE = x;
-                        b = true;
                         break;
                     }
-
-                    startX = 0;
                     endX = 0;
                 }
 
                 int startY = 0;
                 int endY = 0;
-
-                bool c = false;
-                bool d = true;
 
 
                 for (int y = 0; y < CroppedBitMap.Height; y++)
@@ -114,36 +104,41 @@ namespace ScanReduceReturn
                     for (int x = 0; x < CroppedBitMap.Width; x++)
                     {
                         tempColor = CroppedBitMap.GetPixel(x, y);
-                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245 && c == false)
+                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
                         {
                             startY++;
-                        }
-
-                        if (tempColor.R > 240 && tempColor.G > 240 && tempColor.B > 240 && d == false)
-                        {
-                            endY++;
                         }
                     }
 
                     if (startY > CroppedBitMap.Width - 300)
                     {
                         yS = y;
-                        c = true;
-                        d = false;
+                        break;
                     }
+                    startY = 0;
+                }
+
+                for (int y = CroppedBitMap.Height - 1; y > 0; y--)
+                {
+                    for (int x = 0; x < CroppedBitMap.Width; x++)
+                    {
+                        tempColor = CroppedBitMap.GetPixel(x, y);
+                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
+                        {
+                            endY++;
+                        }
+                    }
+
                     if (endY > CroppedBitMap.Width - 300)
                     {
                         yE = y;
-                        d = true;
                         break;
                     }
-
-                    startY = 0;
                     endY = 0;
                 }
 
-                //Create a new Cropped image containing only the actual image, no white space
-                if (yE != 0)
+                        //Create a new Cropped image containing only the actual image, no white space
+                        if (yE != 0)
                 {
                     lblTest.Text = "Here's the cropped image";
                     Rectangle temp = new Rectangle(xS, yS, xE - xS, yE - yS);
