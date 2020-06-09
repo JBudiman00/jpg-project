@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,6 +16,8 @@ namespace ScanReduceReturn
     {
         bool isDown = false;
         bool hasImage = false;
+        bool hasRect = false;
+        bool hasCropped = false;
         int initialX;
         int initialY;
         int finalX;
@@ -45,52 +48,112 @@ namespace ScanReduceReturn
                 file = openDialog.FileName;
                 OrgImage = Image.FromFile(file);
                 pbView.Image = OrgImage;
-                //pbView.SizeMode = PictureBoxSizeMode.StretchImage;
                 hasImage = true;
             }
         }
         private void btnCrop_Click(object sender, EventArgs e)  //Assumption: All images are square/rectangular
         {
-            if (hasImage == true && finalX < pbView.Width && finalY < pbView.Height)   //Add safeguarding against cropping image from actual image size
+            if (hasImage == true && finalX < pbView.Width && finalY < pbView.Height && hasRect == true)   //Add safeguarding against cropping image from actual image size
             {
                 croppedImage = getImageRect();
 
-                /*int count = 0, xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
+                int startX = 0;
+                int endX = 0;
+
+                bool a = false;
+                bool b = true;
+
+                Color tempColor;
+
+                int xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
                 Bitmap CroppedBitMap = new Bitmap(croppedImage);
                 Color white = new Color();
                 white = Color.FromArgb(255, 255, 255);
-                for (int x = 0; x < CroppedBitMap.Width; x++)   //Change, account for zoom factor
+                for (int x = 0; x < CroppedBitMap.Width; x++)  
                 {
                     for (int y = 0; y < CroppedBitMap.Height; y++)
                     {
-                        if (CroppedBitMap.GetPixel(x, y) != white && count == 0)
+                        tempColor = CroppedBitMap.GetPixel(x, y);
+                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245 && a == false)
                         {
-                            xS = x;
-                            yS = y;
-                            count++;
+                            startX++;
                         }
 
-                        if (CroppedBitMap.GetPixel(x, y) == white && count == 1)
+                        if (tempColor.R > 240 && tempColor.G > 240 && tempColor.B > 240 && b == false)
                         {
-                            xE = x;
-                            yE = y;
+                            endX++;
                         }
                     }
-                }*/
+
+                    if (startX > CroppedBitMap.Height - 300)
+                    {
+                        xS = x;
+                        a = true;
+                        b = false;
+                    }
+                    if (endX > CroppedBitMap.Height - 300)
+                    {
+                        xE = x;
+                        b = true;
+                        break;
+                    }
+
+                    startX = 0;
+                    endX = 0;
+                }
+
+                int startY = 0;
+                int endY = 0;
+
+                bool c = false;
+                bool d = true;
+
+
+                for (int y = 0; y < CroppedBitMap.Height; y++)
+                {
+                    for (int x = 0; x < CroppedBitMap.Width; x++)
+                    {
+                        tempColor = CroppedBitMap.GetPixel(x, y);
+                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245 && c == false)
+                        {
+                            startY++;
+                        }
+
+                        if (tempColor.R > 240 && tempColor.G > 240 && tempColor.B > 240 && d == false)
+                        {
+                            endY++;
+                        }
+                    }
+
+                    if (startY > CroppedBitMap.Width - 300)
+                    {
+                        yS = y;
+                        c = true;
+                        d = false;
+                    }
+                    if (endY > CroppedBitMap.Width - 300)
+                    {
+                        yE = y;
+                        d = true;
+                        break;
+                    }
+
+                    startY = 0;
+                    endY = 0;
+                }
 
                 //Create a new Cropped image containing only the actual image, no white space
-                //if (yE != 0)
+                if (yE != 0)
                 {
-                    //lblTest.Text = "Here's the cropped image";
-                    //Rectangle temp = new Rectangle(xS, yS, xE, yE);
-                    //Image completeImage = cropImage(croppedImage, temp);
-                    //float scaleFactorX = pbView.ClientSize.Width / pbView.Image.Size.Width;
-                    //float scaleFactorY = pbView.ClientSize.Height / pbView.Image.Size.Height;
+                    lblTest.Text = "Here's the cropped image";
+                    Rectangle temp = new Rectangle(xS, yS, xE - xS, yE - yS);
+                    croppedImage = cropImage(croppedImage, temp);
                     pbCropped.Image = croppedImage;
-
+                    hasCropped = true;
                 }
-                //else
-                //lblTest.Text = "Error, Retry cropping";
+                else
+                    lblTest.Text = "Error, Retry cropping";
+                hasRect = false;
             }
         }
 
@@ -120,6 +183,7 @@ namespace ScanReduceReturn
         private void pbView_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
+            hasRect = true;
             finalX = e.X;
             finalY = e.Y;
         }
@@ -155,8 +219,6 @@ namespace ScanReduceReturn
 
             float PbFX = (finalX - LeftBarGrayHeight) * scale;
             float PbFY = (finalY - TopBarGrayHeight) * scale;
-
-            lblTest.Text = string.Format("{0} {1} {2} {3}", PbX, PbY, PbFX, PbFY);
 
             croppedRect = new Rectangle((int)PbX, (int)PbY, (int)PbFX - (int)PbX, (int)PbFY - (int)PbY);
 
@@ -200,7 +262,18 @@ namespace ScanReduceReturn
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
+            SaveFileDialog dialog = new SaveFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                croppedImage.Save(dialog.FileName, ImageFormat.Jpeg);
+                lblTest.Text = "Success!";
+                hasCropped = false;
+            }
+        }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            pbCropped.Image = null;
         }
     }
 }
