@@ -36,6 +36,10 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
+            this.cb = new System.Windows.Forms.ComboBox();
+            this.btnSaveToFile = new System.Windows.Forms.Button();
+            this.lblS = new System.Windows.Forms.Label();
+            this.lblImageSave = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropped)).BeginInit();
             this.SuspendLayout();
@@ -61,7 +65,7 @@
             this.btnInsertFile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInsertFile.Location = new System.Drawing.Point(918, 118);
+            this.btnInsertFile.Location = new System.Drawing.Point(1214, 93);
             this.btnInsertFile.Name = "btnInsertFile";
             this.btnInsertFile.Size = new System.Drawing.Size(75, 23);
             this.btnInsertFile.TabIndex = 1;
@@ -74,7 +78,7 @@
             this.btnCrop.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCrop.Location = new System.Drawing.Point(918, 180);
+            this.btnCrop.Location = new System.Drawing.Point(846, 130);
             this.btnCrop.Name = "btnCrop";
             this.btnCrop.Size = new System.Drawing.Size(75, 23);
             this.btnCrop.TabIndex = 0;
@@ -107,7 +111,7 @@
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(918, 254);
+            this.btnSave.Location = new System.Drawing.Point(846, 188);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
@@ -126,7 +130,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(1214, 254);
+            this.btnClear.Location = new System.Drawing.Point(1214, 290);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 6;
@@ -134,11 +138,52 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // cb
+            // 
+            this.cb.FormattingEnabled = true;
+            this.cb.Location = new System.Drawing.Point(1192, 132);
+            this.cb.Name = "cb";
+            this.cb.Size = new System.Drawing.Size(121, 21);
+            this.cb.TabIndex = 7;
+            this.cb.Text = "Choose a File";
+            this.cb.SelectedIndexChanged += new System.EventHandler(this.cb_SelectedIndexChanged);
+            // 
+            // btnSaveToFile
+            // 
+            this.btnSaveToFile.Location = new System.Drawing.Point(1214, 188);
+            this.btnSaveToFile.Name = "btnSaveToFile";
+            this.btnSaveToFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveToFile.TabIndex = 8;
+            this.btnSaveToFile.Text = "SaveToFile";
+            this.btnSaveToFile.UseVisualStyleBackColor = true;
+            this.btnSaveToFile.Click += new System.EventHandler(this.btnSaveToFile_Click);
+            // 
+            // lblS
+            // 
+            this.lblS.AutoEllipsis = true;
+            this.lblS.AutoSize = true;
+            this.lblS.Location = new System.Drawing.Point(1147, 216);
+            this.lblS.Name = "lblS";
+            this.lblS.Size = new System.Drawing.Size(0, 13);
+            this.lblS.TabIndex = 9;
+            // 
+            // lblImageSave
+            // 
+            this.lblImageSave.AutoSize = true;
+            this.lblImageSave.Location = new System.Drawing.Point(846, 232);
+            this.lblImageSave.Name = "lblImageSave";
+            this.lblImageSave.Size = new System.Drawing.Size(0, 13);
+            this.lblImageSave.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1367, 845);
+            this.Controls.Add(this.lblImageSave);
+            this.Controls.Add(this.lblS);
+            this.Controls.Add(this.btnSaveToFile);
+            this.Controls.Add(this.cb);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
@@ -166,6 +211,10 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.ComboBox cb;
+        private System.Windows.Forms.Button btnSaveToFile;
+        private System.Windows.Forms.Label lblS;
+        private System.Windows.Forms.Label lblImageSave;
     }
 }
 

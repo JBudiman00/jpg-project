@@ -4,20 +4,23 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace ScanReduceReturn
 {
     public partial class Form1 : Form
     {
         bool isDown = false;
-        bool hasImage = false;
-        bool hasRect = false;
-        bool hasCropped = false;
+        bool hasImage = false;  //Prevents cropping b4 there is an image
+        bool hasRect = false;   //Prevents cropping b4 there is a rectangle
+        bool hasCropped = false;    //Prevent saving before there is a cropped image
+        int counter = 0;
         int initialX;
         int initialY;
         int finalX;
@@ -26,6 +29,8 @@ namespace ScanReduceReturn
         public static string file;
         Image OrgImage;
         Image croppedImage;
+        List<string> fName = new List<string>();
+        string saveFile;
 
         private float TopBarGrayHeight { get; set; }
         private float LeftBarGrayHeight { get; set; }
@@ -43,12 +48,16 @@ namespace ScanReduceReturn
             openDialog.Title = "Select A File";
             openDialog.Filter = "Image Files (*.png;*.jpg)|*.png;*.jpg" + "|" +
                                 "All Files (*.*)|*.*";
+            openDialog.Multiselect = true;
+            openDialog.Title = "My Image Browser";
+
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
-                file = openDialog.FileName;
-                OrgImage = Image.FromFile(file);
-                pbView.Image = OrgImage;
-                hasImage = true;
+                foreach (string f in openDialog.FileNames)
+                {
+                    this.cb.Items.Add(System.IO.Path.GetFileName(f));
+                    fName.Add(f);
+                }
             }
         }
         private void btnCrop_Click(object sender, EventArgs e)  //Assumption: All images are square/rectangular
@@ -259,18 +268,44 @@ namespace ScanReduceReturn
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (hasCropped == true)
             {
-                croppedImage.Save(dialog.FileName, ImageFormat.Jpeg);
-                lblTest.Text = "Success!";
+                string fileN = counter.ToString() + ".png";
+                string imagePath = saveFile + fileN; 
+                croppedImage.Save(imagePath, ImageFormat.Png);
                 hasCropped = false;
+
+                lblImageSave.Text = "Image saved";  //Set to change later
             }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             pbCropped.Image = null;
+            lblTest.Text = "";
+        }
+
+        private void cb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.cb.GetItemText(this.cb.SelectedItem);
+            foreach (string fileName in fName)
+            {
+                if (System.IO.Path.GetFileName(fileName).Equals(selected))
+                {
+                    file = fileName;
+                    OrgImage = Image.FromFile(file);
+                    pbView.Image = OrgImage;
+                    hasImage = true;
+                }
+            }
+        }
+
+        private void btnSaveToFile_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+                saveFile = dialog.SelectedPath;
+            lblS.Text = saveFile;
         }
     }
 }
