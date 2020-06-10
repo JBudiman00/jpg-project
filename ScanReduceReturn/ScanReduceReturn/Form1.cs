@@ -307,5 +307,55 @@ namespace ScanReduceReturn
                 saveFile = dialog.SelectedPath;
             lblS.Text = saveFile;
         }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (fName != null)  //Also works when no files are set or selected
+            {
+                bool next = false;
+                foreach (string fileName in fName)
+                {
+                    if (next == true)
+                    {
+                        file = fileName;
+                        OrgImage = Image.FromFile(file);
+                        pbView.Image = OrgImage;
+                        hasImage = true;
+                        cb.SelectedIndex = cb.FindString(System.IO.Path.GetFileName(fileName));
+                        break;
+                    }
+
+                    if (fileName.Equals(file))
+                    {
+                        next = true;
+                    }
+                }
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            if (fName != null)  //Also works when no files are set or selected
+            {
+                bool before = false;
+                for (int x = fName.Count - 1; x >= 0; x--)
+                {
+                    if (before == true)
+                    {
+                        file = fName[x];
+                        OrgImage = Image.FromFile(file);
+                        pbView.Image = OrgImage;
+                        hasImage = true;
+                        cb.SelectedIndex = cb.FindString(System.IO.Path.GetFileName(fName[x]));
+                        break;
+                    }
+
+                    if (fName[x].Equals(file))
+                    {
+                        before = true;
+                    }
+                }
+            }
+        }
     }
 }

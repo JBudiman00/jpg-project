@@ -40,6 +40,8 @@
             this.btnSaveToFile = new System.Windows.Forms.Button();
             this.lblS = new System.Windows.Forms.Label();
             this.lblImageSave = new System.Windows.Forms.Label();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropped)).BeginInit();
             this.SuspendLayout();
@@ -65,11 +67,11 @@
             this.btnInsertFile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInsertFile.Location = new System.Drawing.Point(1214, 93);
+            this.btnInsertFile.Location = new System.Drawing.Point(1091, 92);
             this.btnInsertFile.Name = "btnInsertFile";
             this.btnInsertFile.Size = new System.Drawing.Size(75, 23);
             this.btnInsertFile.TabIndex = 1;
-            this.btnInsertFile.Text = "Insert File";
+            this.btnInsertFile.Text = "Insert Files";
             this.btnInsertFile.UseVisualStyleBackColor = true;
             this.btnInsertFile.Click += new System.EventHandler(this.btnInsertFile_Click);
             // 
@@ -141,7 +143,7 @@
             // cb
             // 
             this.cb.FormattingEnabled = true;
-            this.cb.Location = new System.Drawing.Point(1192, 132);
+            this.cb.Location = new System.Drawing.Point(1070, 132);
             this.cb.Name = "cb";
             this.cb.Size = new System.Drawing.Size(121, 21);
             this.cb.TabIndex = 7;
@@ -150,7 +152,7 @@
             // 
             // btnSaveToFile
             // 
-            this.btnSaveToFile.Location = new System.Drawing.Point(1214, 188);
+            this.btnSaveToFile.Location = new System.Drawing.Point(1091, 178);
             this.btnSaveToFile.Name = "btnSaveToFile";
             this.btnSaveToFile.Size = new System.Drawing.Size(75, 23);
             this.btnSaveToFile.TabIndex = 8;
@@ -162,7 +164,7 @@
             // 
             this.lblS.AutoEllipsis = true;
             this.lblS.AutoSize = true;
-            this.lblS.Location = new System.Drawing.Point(1147, 216);
+            this.lblS.Location = new System.Drawing.Point(1064, 214);
             this.lblS.Name = "lblS";
             this.lblS.Size = new System.Drawing.Size(0, 13);
             this.lblS.TabIndex = 9;
@@ -175,11 +177,33 @@
             this.lblImageSave.Size = new System.Drawing.Size(0, 13);
             this.lblImageSave.TabIndex = 10;
             // 
+            // btnNext
+            // 
+            this.btnNext.Location = new System.Drawing.Point(1197, 130);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.TabIndex = 12;
+            this.btnNext.Text = "Next";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(989, 132);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.TabIndex = 13;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1367, 845);
+            this.Controls.Add(this.btnBack);
+            this.Controls.Add(this.btnNext);
             this.Controls.Add(this.lblImageSave);
             this.Controls.Add(this.lblS);
             this.Controls.Add(this.btnSaveToFile);
@@ -215,6 +239,8 @@
         private System.Windows.Forms.Button btnSaveToFile;
         private System.Windows.Forms.Label lblS;
         private System.Windows.Forms.Label lblImageSave;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnBack;
     }
 }
 
