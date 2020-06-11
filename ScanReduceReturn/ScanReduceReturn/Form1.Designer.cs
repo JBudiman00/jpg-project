@@ -42,6 +42,7 @@
             this.lblImageSave = new System.Windows.Forms.Label();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
+            this.btnRickRoll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropped)).BeginInit();
             this.SuspendLayout();
@@ -197,11 +198,22 @@
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
+            // btnRickRoll
+            // 
+            this.btnRickRoll.Location = new System.Drawing.Point(1283, 23);
+            this.btnRickRoll.Name = "btnRickRoll";
+            this.btnRickRoll.Size = new System.Drawing.Size(56, 23);
+            this.btnRickRoll.TabIndex = 14;
+            this.btnRickRoll.Text = "Click Me";
+            this.btnRickRoll.UseVisualStyleBackColor = true;
+            this.btnRickRoll.Click += new System.EventHandler(this.btnRickRoll_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1367, 845);
+            this.Controls.Add(this.btnRickRoll);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.lblImageSave);
@@ -241,6 +253,7 @@
         private System.Windows.Forms.Label lblImageSave;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Button btnRickRoll;
     }
 }
 

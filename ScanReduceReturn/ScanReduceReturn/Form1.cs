@@ -360,5 +360,10 @@ namespace ScanReduceReturn
             }
             lblImageSave.Text = "";
         }
+
+        private void btnRickRoll_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        }
     }
 }
