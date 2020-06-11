@@ -62,6 +62,7 @@ namespace ScanReduceReturn
         }
         private void btnCrop_Click(object sender, EventArgs e)  //Assumption: All images are square/rectangular
         {
+            lblImageSave.Text = "";
             if (hasImage == true && finalX < pbView.Width && finalY < pbView.Height && hasRect == true)   //Add safeguarding against cropping image from actual image size
             {
                 croppedImage = getImageRect();
@@ -270,12 +271,12 @@ namespace ScanReduceReturn
         {
             if (hasCropped == true)
             {
-                string fileN = counter.ToString() + ".png";
-                string imagePath = saveFile + fileN; 
-                croppedImage.Save(imagePath, ImageFormat.Png);
+                string fileN = "OldPics" + counter.ToString() + ".png";
+                string imagePath = saveFile + fileN;
+                croppedImage.Save(imagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
                 hasCropped = false;
-
                 lblImageSave.Text = "Image saved";  //Set to change later
+                counter++;
             }
         }
 
@@ -331,6 +332,7 @@ namespace ScanReduceReturn
                     }
                 }
             }
+            lblImageSave.Text = "";
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -356,6 +358,12 @@ namespace ScanReduceReturn
                     }
                 }
             }
+            lblImageSave.Text = "";
+        }
+
+        private void btnRickRoll_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
         }
     }
 }
