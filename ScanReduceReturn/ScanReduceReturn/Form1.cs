@@ -32,6 +32,7 @@ namespace ScanReduceReturn
         List<string> fName = new List<string>();
         string saveFile;
 
+
         private float TopBarGrayHeight { get; set; }
         private float LeftBarGrayHeight { get; set; }
         private bool UseXScale { get; set; }
@@ -277,6 +278,7 @@ namespace ScanReduceReturn
                 hasCropped = false;
                 lblImageSave.Text = "Image saved";  //Set to change later
                 counter++;
+                lblCounter.Text = string.Format("Counter: {0}", counter);
             }
         }
 
@@ -364,6 +366,13 @@ namespace ScanReduceReturn
         private void btnRickRoll_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        }
+
+        private void btnEnter_Click(object sender, EventArgs e)
+        {
+            if (tb.Text != null)
+                lblCounter.Text = string.Format("Counter: {0}", tb.Text);
+            counter = Int32.Parse(tb.Text);
         }
     }
 }

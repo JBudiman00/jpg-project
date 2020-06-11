@@ -43,6 +43,10 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnRickRoll = new System.Windows.Forms.Button();
+            this.lblCounter = new System.Windows.Forms.Label();
+            this.tb = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnEnter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropped)).BeginInit();
             this.SuspendLayout();
@@ -208,11 +212,50 @@
             this.btnRickRoll.UseVisualStyleBackColor = true;
             this.btnRickRoll.Click += new System.EventHandler(this.btnRickRoll_Click);
             // 
+            // lblCounter
+            // 
+            this.lblCounter.AutoSize = true;
+            this.lblCounter.Location = new System.Drawing.Point(871, 46);
+            this.lblCounter.Name = "lblCounter";
+            this.lblCounter.Size = new System.Drawing.Size(50, 13);
+            this.lblCounter.TabIndex = 15;
+            this.lblCounter.Text = "Counter: ";
+            // 
+            // tb
+            // 
+            this.tb.Location = new System.Drawing.Point(875, 271);
+            this.tb.Name = "tb";
+            this.tb.Size = new System.Drawing.Size(100, 20);
+            this.tb.TabIndex = 16;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(862, 255);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(130, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Enter custom start number";
+            // 
+            // btnEnter
+            // 
+            this.btnEnter.Location = new System.Drawing.Point(889, 297);
+            this.btnEnter.Name = "btnEnter";
+            this.btnEnter.Size = new System.Drawing.Size(75, 23);
+            this.btnEnter.TabIndex = 18;
+            this.btnEnter.Text = "Enter";
+            this.btnEnter.UseVisualStyleBackColor = true;
+            this.btnEnter.Click += new System.EventHandler(this.btnEnter_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1367, 845);
+            this.Controls.Add(this.btnEnter);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.tb);
+            this.Controls.Add(this.lblCounter);
             this.Controls.Add(this.btnRickRoll);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnNext);
@@ -254,6 +297,10 @@
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnRickRoll;
+        private System.Windows.Forms.Label lblCounter;
+        private System.Windows.Forms.TextBox tb;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnEnter;
     }
 }
 
