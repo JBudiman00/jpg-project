@@ -32,6 +32,8 @@ namespace ScanReduceReturn
         List<string> fName = new List<string>();
         string saveFile;
 
+        string corner = "";
+
 
         private float TopBarGrayHeight { get; set; }
         private float LeftBarGrayHeight { get; set; }
@@ -179,12 +181,35 @@ namespace ScanReduceReturn
             {
                 this.Refresh();
                 Pen drawPen = new Pen(Color.Navy, 1);
-                int width = e.X - initialX, height = e.Y - initialY;
+                int width = Math.Abs(e.X - initialX), height = Math.Abs(e.Y - initialY);
 
                 //Rectangle rect = new Rectangle(initialPt.X, initialPt.Y, Cursor.Position.X - initialPt.X, Cursor.Position.Y - initialPt.Y);
-                Rectangle rect = new Rectangle(Math.Min(e.X, initialX), Math.Min(e.X, initialY), Math.Abs(width), Math.Abs(height));
-                pbView.CreateGraphics().DrawRectangle(drawPen, rect);
+                Rectangle rect = new Rectangle();
+                //pbView.CreateGraphics().DrawRectangle(drawPen, rect);
 
+                if (e.X > initialX && e.Y > initialY)   //Corner value is position of mouse at corner of rectangle
+                {
+                    rect = new Rectangle(initialX, initialY, width, height);
+                    corner = "bottomright";
+                }
+                else if (e.X > initialX && e.Y < initialY)
+                {
+                    rect = new Rectangle(initialX, initialY - height, width, height);
+                    corner = "topright";
+                }
+
+                else if (e.X < initialX && e.Y < initialY)
+                {
+                    rect = new Rectangle(initialX - width, initialY - height, width, height);
+                    corner = "topleft";
+                }
+                else if (e.X < initialX && e.Y > initialY)
+                {
+                    rect = new Rectangle(initialX - width, initialY, width, height);
+                    corner = "bottomleft";
+                }
+
+                pbView.CreateGraphics().DrawRectangle(drawPen, rect);
             }
         }
 
@@ -216,7 +241,7 @@ namespace ScanReduceReturn
             float xScale = imageWidth / (float)pbWidth;
             float yScale = imageHeight / (float)pbHeight;
 
-            var scale = 0F;
+            float scale;
             if (UseXScale == true)
                 scale = xScale;
             else
@@ -228,7 +253,22 @@ namespace ScanReduceReturn
             float PbFX = (finalX - LeftBarGrayHeight) * scale;
             float PbFY = (finalY - TopBarGrayHeight) * scale;
 
-            croppedRect = new Rectangle((int)PbX, (int)PbY, (int)PbFX - (int)PbX, (int)PbFY - (int)PbY);
+            int xI = (int)PbX;
+            int yI = (int)PbY;
+            int xF = (int)PbFX;
+            int yF = (int)PbFY;
+
+            int w = Math.Abs(xI - xF);
+            int h = Math.Abs(yI - yF);
+
+            if (corner.Equals("bottomright"))
+                croppedRect = new Rectangle(xI, yI, w, h);
+            else if (corner.Equals("topright"))
+                croppedRect = new Rectangle(xI, yI - h, w, h);
+            else if (corner.Equals("bottomleft"))
+                croppedRect = new Rectangle(xI - w, yI, w, h);
+            else if (corner.Equals("topleft"))
+                croppedRect = new Rectangle(xI - w, yI - h, w, h);
 
             return cropImage(OrgImage, croppedRect);
 
