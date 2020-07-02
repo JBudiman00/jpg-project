@@ -20,6 +20,7 @@ namespace ScanReduceReturn
         bool hasImage = false;  //Prevents cropping b4 there is an image
         bool hasRect = false;   //Prevents cropping b4 there is a rectangle
         bool hasCropped = false;    //Prevent saving before there is a cropped image
+        bool Hprecision = false;
         int counter = 0;
         int initialX;
         int initialY;
@@ -33,7 +34,7 @@ namespace ScanReduceReturn
         string saveFile;
 
         string corner = "";
-
+        ToolTip t1 = new ToolTip();
 
         private float TopBarGrayHeight { get; set; }
         private float LeftBarGrayHeight { get; set; }
@@ -43,6 +44,7 @@ namespace ScanReduceReturn
 
         public Form1()
         {
+            t1.ShowAlways = true;
             InitializeComponent();
         }
         private void btnInsertFile_Click(object sender, EventArgs e)
@@ -75,15 +77,31 @@ namespace ScanReduceReturn
                 int xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
                 Bitmap CroppedBitMap = new Bitmap(croppedImage);
 
-                int BitMapHeight = CroppedBitMap.Height / 8;
                 int tempCount = 0;
 
+                int checkCount;   //Total pixel checks
                 int pixelRGB = 240;     //RGB pixel precision 
+                int countPass;
+
+                if (Hprecision == true)
+                {
+                    checkCount = 100;
+                    countPass = (int)(checkCount * 0.75);
+                }
+                else { 
+                    checkCount = 8;
+                    countPass = checkCount - 1;
+                }
+                    
+
+                
+
+                int BitMapHeight = CroppedBitMap.Height / checkCount;
 
                 for (int x = 0; x < CroppedBitMap.Width; x+=2)      //Variability/precision of cropping
                 {
                     tempCount = 0;
-                    for (int y = 1; y < 8; y++)
+                    for (int y = 1; y < checkCount; y++)
                     {
                         tempColor = CroppedBitMap.GetPixel(x, BitMapHeight * y);
                         if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
@@ -91,7 +109,7 @@ namespace ScanReduceReturn
                             tempCount++;
                         }
                     }
-                    if (tempCount == 7)
+                    if (tempCount >= countPass)
                     {
                         xS = x;
                         break;
@@ -101,7 +119,7 @@ namespace ScanReduceReturn
                 for (int x = CroppedBitMap.Width - 1; x > 0 ; x--)
                 {
                     tempCount = 0;
-                    for (int y = 1; y < 8; y++)
+                    for (int y = 1; y < checkCount; y++)
                     {
                         tempColor = CroppedBitMap.GetPixel(x, BitMapHeight * y);
                         if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
@@ -109,19 +127,19 @@ namespace ScanReduceReturn
                             tempCount++;
                         }
                     }
-                    if (tempCount == 7)
+                    if (tempCount >= countPass)
                     {
                         xE = x;
                         break;
                     }
                 }
 
-                int BitMapWidth = CroppedBitMap.Width / 8;
+                int BitMapWidth = CroppedBitMap.Width / checkCount;
 
                 for (int y = 0; y < CroppedBitMap.Height; y++)
                 {
                     tempCount = 0;
-                    for (int x = 1; x < 8; x++)
+                    for (int x = 1; x < checkCount; x++)
                     {
                         tempColor = CroppedBitMap.GetPixel(BitMapWidth * x, y);
                         if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
@@ -129,7 +147,7 @@ namespace ScanReduceReturn
                             tempCount++;
                         }
                     }
-                    if (tempCount == 7)
+                    if (tempCount >= countPass)
                     {
                         yS = y;
                         break;
@@ -139,7 +157,7 @@ namespace ScanReduceReturn
                 for (int y = CroppedBitMap.Height - 1; y > 0; y--)
                 {
                     tempCount = 0;
-                    for (int x = 1; x < 8; x++)
+                    for (int x = 1; x < checkCount; x++)
                     {
                         tempColor = CroppedBitMap.GetPixel(BitMapWidth * x, y);
                         if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
@@ -147,7 +165,7 @@ namespace ScanReduceReturn
                             tempCount++;
                         }
                     }
-                    if (tempCount == 7)
+                    if (tempCount >= countPass)
                     {
                         yE = y;
                         break;
@@ -405,16 +423,32 @@ namespace ScanReduceReturn
             lblImageSave.Text = "";
         }
 
-        private void btnRickRoll_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-        }
-
         private void btnEnter_Click(object sender, EventArgs e)
         {
             if (tb.Text != null)
                 lblCounter.Text = string.Format("Counter: {0}", tb.Text);
             counter = Int32.Parse(tb.Text);
+        }
+
+        private void btnPrecision_Click(object sender, EventArgs e)
+        {
+            if (Hprecision == false)
+            {
+                btnPrecision.Text = "Low Precision";
+                Hprecision = true;
+            }
+            else
+            {
+                btnPrecision.Text = "High Precision";
+                Hprecision = false;
+            }
+        }
+
+        private void btnPrecision_Hover(object sender, EventArgs e)
+        {
+            t1.SetToolTip(btnPrecision, "The precision button determines the amount of " +
+                "\nerror allowed between crops.\n" +
+                "The higher the precision, the more accurate the image \nand the smaller the amount of user crop error allowed");
         }
     }
 }

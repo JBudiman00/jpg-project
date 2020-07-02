@@ -42,11 +42,11 @@
             this.lblImageSave = new System.Windows.Forms.Label();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
-            this.btnRickRoll = new System.Windows.Forms.Button();
             this.lblCounter = new System.Windows.Forms.Label();
             this.tb = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnEnter = new System.Windows.Forms.Button();
+            this.btnPrecision = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropped)).BeginInit();
             this.SuspendLayout();
@@ -202,16 +202,6 @@
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // btnRickRoll
-            // 
-            this.btnRickRoll.Location = new System.Drawing.Point(1283, 23);
-            this.btnRickRoll.Name = "btnRickRoll";
-            this.btnRickRoll.Size = new System.Drawing.Size(56, 23);
-            this.btnRickRoll.TabIndex = 14;
-            this.btnRickRoll.Text = "Click Me";
-            this.btnRickRoll.UseVisualStyleBackColor = true;
-            this.btnRickRoll.Click += new System.EventHandler(this.btnRickRoll_Click);
-            // 
             // lblCounter
             // 
             this.lblCounter.AutoSize = true;
@@ -247,16 +237,26 @@
             this.btnEnter.UseVisualStyleBackColor = true;
             this.btnEnter.Click += new System.EventHandler(this.btnEnter_Click);
             // 
+            // btnPrecision
+            // 
+            this.btnPrecision.Location = new System.Drawing.Point(1067, 222);
+            this.btnPrecision.Name = "btnPrecision";
+            this.btnPrecision.Size = new System.Drawing.Size(122, 23);
+            this.btnPrecision.TabIndex = 19;
+            this.btnPrecision.Text = "High Precision";
+            this.btnPrecision.UseVisualStyleBackColor = true;
+            this.btnPrecision.Click += new System.EventHandler(this.btnPrecision_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1367, 845);
+            this.Controls.Add(this.btnPrecision);
             this.Controls.Add(this.btnEnter);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tb);
             this.Controls.Add(this.lblCounter);
-            this.Controls.Add(this.btnRickRoll);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.lblImageSave);
@@ -296,11 +296,11 @@
         private System.Windows.Forms.Label lblImageSave;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.Button btnRickRoll;
         private System.Windows.Forms.Label lblCounter;
         private System.Windows.Forms.TextBox tb;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnEnter;
+        private System.Windows.Forms.Button btnPrecision;
     }
 }
 
