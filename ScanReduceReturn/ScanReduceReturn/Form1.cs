@@ -75,21 +75,23 @@ namespace ScanReduceReturn
                 int xS = -1, yS = 0, xE = 0, yE = 0;  //Represent starting and ending dialgonals of image
                 Bitmap CroppedBitMap = new Bitmap(croppedImage);
 
-                int BitMapHeight = CroppedBitMap.Height / 4;
+                int BitMapHeight = CroppedBitMap.Height / 8;
                 int tempCount = 0;
 
-                for (int x = 0; x < CroppedBitMap.Width; x+=2)  
+                int pixelRGB = 240;     //RGB pixel precision 
+
+                for (int x = 0; x < CroppedBitMap.Width; x+=2)      //Variability/precision of cropping
                 {
                     tempCount = 0;
-                    for (int y = 1; y < 4; y++)
+                    for (int y = 1; y < 8; y++)
                     {
                         tempColor = CroppedBitMap.GetPixel(x, BitMapHeight * y);
-                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
+                        if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
                         {
                             tempCount++;
                         }
                     }
-                    if (tempCount == 3)
+                    if (tempCount == 7)
                     {
                         xS = x;
                         break;
@@ -99,35 +101,35 @@ namespace ScanReduceReturn
                 for (int x = CroppedBitMap.Width - 1; x > 0 ; x--)
                 {
                     tempCount = 0;
-                    for (int y = 1; y < 4; y++)
+                    for (int y = 1; y < 8; y++)
                     {
                         tempColor = CroppedBitMap.GetPixel(x, BitMapHeight * y);
-                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
+                        if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
                         {
                             tempCount++;
                         }
                     }
-                    if (tempCount == 3)
+                    if (tempCount == 7)
                     {
                         xE = x;
                         break;
                     }
                 }
 
-                int BitMapWidth = CroppedBitMap.Width / 4;
+                int BitMapWidth = CroppedBitMap.Width / 8;
 
                 for (int y = 0; y < CroppedBitMap.Height; y++)
                 {
                     tempCount = 0;
-                    for (int x = 1; x < 4; x++)
+                    for (int x = 1; x < 8; x++)
                     {
                         tempColor = CroppedBitMap.GetPixel(BitMapWidth * x, y);
-                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
+                        if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
                         {
                             tempCount++;
                         }
                     }
-                    if (tempCount == 3)
+                    if (tempCount == 7)
                     {
                         yS = y;
                         break;
@@ -137,15 +139,15 @@ namespace ScanReduceReturn
                 for (int y = CroppedBitMap.Height - 1; y > 0; y--)
                 {
                     tempCount = 0;
-                    for (int x = 1; x < 4; x++)
+                    for (int x = 1; x < 8; x++)
                     {
                         tempColor = CroppedBitMap.GetPixel(BitMapWidth * x, y);
-                        if (tempColor.R < 245 && tempColor.G < 245 && tempColor.B < 245)
+                        if (tempColor.R < pixelRGB && tempColor.G < pixelRGB && tempColor.B < pixelRGB)
                         {
                             tempCount++;
                         }
                     }
-                    if (tempCount == 3)
+                    if (tempCount == 7)
                     {
                         yE = y;
                         break;
